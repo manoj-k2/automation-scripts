@@ -1,0 +1,19 @@
+{
+    "pem_file": "/Users/k2cyber/Downloads/k2-qa.pem",
+    "k2cloud": "https://k2io.net",
+    "k2email": "manojy@k2io.com",
+    "customer_id": "1025",
+    "token": "37261930497218236747149031930659763246",
+    "k2home": "/opt/k2root/",
+    "install_dir":"installer/",
+    "k2GroupName": "IAST",
+    "k2GroupEnv": "IAST",
+    "rc": "2.0.1-rc5",
+    "validator": "655",
+    "microagent": "230",
+    "vm": "192.168.5.68",
+    "public_ip": "18.191.247.91",
+    "user": "ubuntu",
+    "root": true,
+    "docker": true
+}

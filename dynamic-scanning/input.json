@@ -1,0 +1,101 @@
+{
+    "app_name": "insecure-ruby-on-rails-app",
+    "port": "3000",
+    "app_run_command": "docker run -itd -e K2_GROUP_NAME={policy} -v {k2home}:{k2home} -e K2_OPTS={k2home}k2root/collectors/k2-ruby-agent -e K2_HOME={k2home} --name {container_name} k2cyber/test_application:insecure-ruby-on-rails-app",
+    "start_time": 50,
+    "crawl_command": "bash /attack.sh all",
+    "result_time": 10,
+    "urls": 
+    [   
+        [  
+            {
+                "uri": "/ssrf-attackcase" 
+            }, 
+            {
+                "api_id" : "9a221775709e856b0d0af1cb9940340f0fac114662dc2ccd0c0d127d133ecca3",
+                "vulnerability": "SSRF",
+                "vulnerable_key": "input" 
+            }
+        ],
+        [
+            {
+                "uri": "/xpath-passcase"
+            }, 
+            {
+                "api_id" : "c85cafc0e3e25b9ab9194ffddb05c8443ceb018978687fcef15f795b93ac096c",
+	            "vulnerability": "XPATH",
+	            "vulnerable_key": "input"
+	        }
+        ],
+        [
+            {
+                "uri": "/xpath-attackcase"
+            }, 
+            {
+                "api_id" : "c7c2d39d23f6ff6ae875f7f832a052deb48d3410c61163647933d4f058f2397f",
+	            "vulnerability": "XPATH",
+	            "vulnerable_key": "input" 
+	        }
+        ],
+        [
+            {
+                "uri": "/cmdi-attackcase"
+            }, 
+            {
+                "api_id" : "bb3ac7f517f8425510d721936f84fe29ef3bc9d5ae256362c2fe6c15fb5e6553",
+	            "vulnerability": "Remote Code Execution",
+	            "vulnerable_key": "input" 
+	        } 
+        ],
+        [
+            {
+                "uri": "/appi-attackcase"
+            }, 
+            {
+                "api_id" : "c2d122937525c8cc5a79279842c3b22be7b5bc17e56389f5e7c4f9750c378f57",
+	            "vulnerability": "Application Integrity Violation",
+	            "vulnerable_key": "input" 
+	        }
+        ],
+        [
+            {
+                "uri": "/ldap-attackcase"
+            }, 
+            {
+                "api_id" : "2677e3a25915cfe4afb9acd22026aeb1fcc456afcc42369f70969a27dd519f1d",
+	            "vulnerability": "LDAP Injection",
+	            "vulnerable_key": "input" 
+	        }
+        ],
+        [
+            {
+                "uri": "/sqli-passcase"
+            }, 
+            {
+                "api_id" : "1b35e86ef3a540e4cdc21eeb30dadbcd187d290863df7258076549ddc0a9875e",
+	            "vulnerability": "SQL Injection",
+	            "vulnerable_key": "input" 
+	        }
+        ], 
+        [
+            {
+                "uri": "/sqli-attackcase"
+            }, 
+            {
+                "api_id" : "17d16d262d860448f17efd679c84ace113910498b745e0085121f4d0ecca8ef8",
+	            "vulnerability": "SQL Injection",
+	            "vulnerable_key": "input" 
+	        }
+        ],
+        [
+            {
+                "uri": "/fileaccess-attackcase"
+            }, 
+            {
+                "api_id" : "caf1a00053803b02b163cf9c1b50a484fb4801171d33a541a3fe3302fbedd15b",
+	            "vulnerability": "File Access",
+	            "vulnerable_key": "input" 
+	        }
+        ]
+    ]
+}

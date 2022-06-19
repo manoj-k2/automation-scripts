@@ -1,0 +1,11 @@
+{
+    "k2cloud": "https://k2cloud210.k2io.net",
+    "k2email": "manojy@k2io.com",
+    "customer_id": "1025",
+    "token": "37261930497218236747149031930659763246",
+    "k2GroupName": "IAST",
+    "k2GroupEnv": "IAST",
+    "validator": "565",
+    "microagent": "226",
+    "k2home": "/opt/k2root/"
+}

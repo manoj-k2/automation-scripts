@@ -1,0 +1,20 @@
+{
+    "k2cloud": "https://k2cloud210.k2io.net",  
+    "k2email": "longevity@k2io.com",
+    "customer_id": "1026",
+    "k2password": "admin",
+    "k2GroupName": "IAST",
+    "k2GroupEnv": "IAST",
+    "rc": "2.0.0-rc11",
+    "validator_endpoint": "192.168.5.86",
+    "token": "264724714875934473620521867788424556633",
+    "yandex_machine": "192.168.5.62",
+    "machine_password": "k2cyber",
+    "without_machine": "192.168.5.66",
+    "start_url": "http://localhost:80/syscall-app/",
+    "validator": "570",
+    "microagent": "226",
+    "yandex_time": "2h",
+    "without_app_run": "docker run -itd -p 80:80 --name syscall_php k2cyber/test_application:k2-php-vulnerable-perf",
+    "with_app_run": "docker run -v /opt/k2root:/opt/k2root:z -e K2_GROUP_NAME=IAST -itd -p 80:80 --name syscall_php k2cyber/test_application:k2-php-vulnerable-perf"
+}
