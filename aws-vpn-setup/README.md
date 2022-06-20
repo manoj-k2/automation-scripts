@@ -34,5 +34,5 @@
     ```sh
     python3 vpn_installation.py 
     ```
-- NOTE: IF it fails, install Open-VPN client on machine by manually:
-- https://www.ovpn.com/en/guides/ubuntu-cli
+- NOTE: IF it fails, install Open-VPN client on machine by manually, then run script:
+   Reference: https://www.ovpn.com/en/guides/ubuntu-cli
