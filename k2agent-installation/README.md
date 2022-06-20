@@ -27,13 +27,15 @@
     ```sh
     $ vi config.json
     Mandatory fields:
-    - pem file
-    - k2GroupName
-    - rc
-    - validator
-    - microagent
-    - vm : ( incase of vm )
-    - public ip, user ( incase of aws instance )
+    - pem file ( location of your aws instance ssh file eg.- k2-qa.pem )
+    - k2GroupName (eg. IAST)
+    - rc         (eg. 2.0.1-rc5 should be latest) 
+    - validator  (eg. 650)
+    - microagent (eg. 230)
+    incase of vm 
+    - vm : (eg. 192.168.5.68 )
+    incase of aws instance
+    - public ip, user (eg. 18.191.247.91, ubuntu)
     - root : true or false
     - docker : true or false 
     ```
