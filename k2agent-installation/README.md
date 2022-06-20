@@ -23,6 +23,20 @@
     pip3 install -U pip setuptools 
     pip3 install paramiko
     ```
+- Edit config.json file :
+    ```sh
+    $ vi config.json
+    Mandatory fields:
+    - pem file
+    - k2GroupName
+    - rc
+    - validator
+    - microagent
+    - vm : ( incase of vm )
+    - public ip, user ( incase of aws instance )
+    - root : true or false
+    - docker : true or false 
+    ```
 
 - Run script on your machine (eg. Mac):
     ```sh
