@@ -1,5 +1,5 @@
 # Longevity autorun 
-- This script can run longevity test for following LCs:
+- This script can run longevity test for following LCs: (on k2 private cloud)
   - Ruby
   - Java
   - Node
