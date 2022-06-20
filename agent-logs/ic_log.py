@@ -67,8 +67,6 @@ if len(sys.argv) > 2:
             ic_log_file="k2-vulnerability-record.log"    
         elif(sys.argv[2]=="events"):
             ic_log_file="k2-intcode_event_status.log" 
-        elif(sys.argv[2]=="events"):
-            ic_log_file="k2-intcode_event_status.log" 
         elif(sys.argv[2]=="scanner"):
             ic_log_file="k2-vulnerability-scanner.log" 
         else:
