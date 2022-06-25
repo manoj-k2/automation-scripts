@@ -1,5 +1,5 @@
 # K2 2.x Language Collector Functionality Test 
-- This script can run test basic functionality for following LCs:
+- This script can test basic functionality for following LCs:
   - Ruby
   - Java
   - Node
