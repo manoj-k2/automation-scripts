@@ -1,8 +1,5 @@
 import OperationLC
 from threading import Thread
-import time
-import os
-
 
 if __name__ == "__main__":
     OperationLC.set_config()
@@ -17,8 +14,11 @@ if __name__ == "__main__":
     thread3.start()
     thread4 = Thread(target=OperationLC.get_json_info,args=("getPolicy Response",))
     thread4.start()
-    thread1.join()
+    #thread1.join()
     thread2.join()
     thread3.join()
-    thread4.join()
+    #thread4.join()
+    OperationLC.get_ic_file()
+    OperationLC.get_ic_json("cveScanResult Data to be posted :")
+    OperationLC.validate_attack()
     OperationLC.get_errors()

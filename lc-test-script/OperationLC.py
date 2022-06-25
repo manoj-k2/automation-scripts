@@ -38,7 +38,18 @@ def pretty_json_print(string,json_name):
         print(header_str+"\n"+colorful_json)
     else:     
         rich.print_json(pretty_json) 
-        #,separators =(", ", " = ")
+
+def fetch_json(line):
+    #print(line,"\nn\n")
+    for word in line.split("\n"):
+        index=0
+        if not word:
+            continue 
+        for j in word:
+            if j == "{":
+                break
+            index+=1
+        return json.loads(word[index: : ])
 
 def get_lc_file():
     global lc_log
@@ -52,6 +63,11 @@ def get_lc_file():
         if lc.find("init") == -1 and lc.find("agent") != -1:
             lc_log = lc 
 
+def get_ic_file():
+    global ic_dir
+    cmd = "ls -lrth " + k2home+"k2root/logs/int-code/"	
+    ic_id = check_output(cmd, shell=True).decode("utf-8").split()[-1]
+    ic_dir= k2home+"k2root/logs/int-code/"+ic_id+"/"
 
 def get_json_info(json_name):
     print("\033[1;33mgetting "+json_name+" data...\033[0m")
@@ -62,15 +78,9 @@ def get_json_info(json_name):
         file1 = open(lc_log, "r")
         for line in file1:  
             if json_name in line:	
-                for word in line.split("\n"):
-                    index=0
-                    if not word:
-                        continue 
-                    for j in word:
-                        if j == "{":
-                            break
-                        index+=1
-                    json_result_data.append(json.loads(word[index: : ]))
+                #print(line)
+                json_data=fetch_json(line)
+                json_result_data.append(json_data)
                 json_info=1
                 if first == True:
                     break 
@@ -83,14 +93,12 @@ def get_json_info(json_name):
             time.sleep(10)  
     if json_result_data :  
         print(json_name,"found:",len(json_result_data))
-        #print("\033[1;33m\n======================")
-        #print(json_name+":\n======================\033[0m\n")
         pretty_json_print(json_result_data[0],json_name)
     else:
         print("\033[1;31m"+json_name+" not found !\033[0m")
 
 def get_errors():
-    print("ERROR:\n=======\n")
+    print("\nERROR:\n=======\n")
     for t in range(0,10):    # waiting time = 10 min
         error_data=[]    
         json_info=0  
@@ -119,7 +127,7 @@ def get_app_uuid():
             cmd = "ls -lrth " + k2home+"k2root/logs/language-agent"	
             appuid = check_output(cmd, shell=True).decode("utf-8").split()[-1]	
             print("\033[1;32mLANGUAGE AGENT IS ATTACHED !\033[0m\n")
-            return appuid
+            return
         except:
             print("\033[1;31m\nERROR: language-Agent Logs are not Generated!\033[0m \n")
             #quit()
@@ -153,3 +161,79 @@ def get_app_uuid():
         print("Using given appUUID: ",appuid)
         #quit()
 
+def get_ic_json(json_name):
+    print("\033[1;33m\ngetting CVE scan result data...\033[0m")
+    ic_log=ic_dir+"prevent_web.log"
+    #print(lc_log)
+    json_result_data=[]      
+    file1 = open(ic_log, "r")
+    for line in file1:  
+        if json_name in line and appuid in line:	
+            json_data=fetch_json(line)
+            json_result_data.append(json_data)
+    file1.close() 
+    if json_result_data:
+        print(json_name,"found:",len(json_result_data))
+        ask=input("\033[96mDo you want to show cve scan result (y/n): \033[0m")
+        if ask == "yes" or ask =="y": 
+            for js in json_result_data:
+                pretty_json_print(js,json_name+" "+js["applicationName"])
+    else:
+        print("\033[1;31m"+json_name+" not found !\033[0m") 
+
+def remove_extra_data(line):
+    flag=0
+    for index in range( len(line) - 2, -1, -1) :
+        if line[index] == "}" :
+            return json.loads(line[:index+1 :])
+
+def get_attacks():
+    json_result_data=[]
+    file1 = open(ic_dir+"prevent_web.log", "r")
+    for line in file1:  
+        if "Validated event :" in line and appuid in line and "Attack" in line :	 # 
+            for word in line.split("\n"):
+                index=0
+                if not word:
+                    continue 
+                for j in word:
+                    if j == "{":
+                        break
+                    index+=1
+                json_data=remove_extra_data(word[index: : ])
+                json_result_data.append(json_data)
+    file1.close()  
+    return json_result_data
+
+def validate_attack():
+    print("\033[1;33m\ngetting Validated attacks data...\033[0m")
+    wait_time=10
+    old_attack_count=0
+    old_attacks= get_attacks()
+    old_attack_count=len(old_attacks)
+    last_timestamp = old_attacks[-1]["eventGenerationTime"]
+    print("Old attacks counts: ", old_attack_count)
+    attack_curl="docker exec -it "+container_id+" bash /attack.sh all"
+    # attacking 
+    check_output(attack_curl,stderr=subprocess.STDOUT, shell=True)
+    print("waiting for attacks:",wait_time,"second")
+    time.sleep(wait_time)
+    json_result_data = get_attacks()
+    if json_result_data :  
+        print("New attacks counts:",len(json_result_data)-old_attack_count)
+        print("\nFOUND THESE VULNERABILITIES : \n===========================")
+        count=1
+        for js in json_result_data:
+            if count > old_attack_count: 
+                print(js["vulnerabilityCaseType"])
+            count+=1 
+        ask=input("\033[96m\nDo you want to show all attacks (y/n): \033[0m")
+        if ask == "yes" or ask =="y":
+            count=1
+            for js in json_result_data:
+                if count > old_attack_count:
+                    pretty_json_print(js,"Attack: "+ js["vulnerabilityCaseType"])   
+                count+=1 
+    else:
+        print("\033[1;31m attacks are not found !\033[0m")
+        
