@@ -14,6 +14,8 @@
   - http-connection-stat
   - healthcheck
   - json counts
+  - Attack Validation
+  - CVE-Scan 
   - ERROR
 
 ### Steps to run setup
